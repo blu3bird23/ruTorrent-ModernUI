@@ -47,11 +47,6 @@ to change them:
 
 Keep each `*-rgb` value in sync with its hex colour.
 
-## Preview
-
-Open `themes/ModernUI/preview.html` or `themes/ModernUI-Light/preview.html` in a browser. No build
-step required.
-
 ## Credits & license
 
 Built on the bundled **MaterialDesign** theme (Phlo, LesBleus), with icons from

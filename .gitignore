@@ -1,0 +1,24 @@
+# OS / editor noise
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*~
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Optional: keep release archives in dist/, but ignore ad-hoc zips elsewhere
+/*.zip

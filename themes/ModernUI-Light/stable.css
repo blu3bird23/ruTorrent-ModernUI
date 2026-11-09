@@ -1,0 +1,409 @@
+/* ==========================================================================
+   ModernUI for ruTorrent - torrent table
+   ========================================================================== */
+
+.stable {
+  --header-bg-color: var(--mui-surface-2);
+  --header-bg-image: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0));
+  --header-border-color: var(--mui-border);
+  --header-asc-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 15 6-6 6 6'/%3E%3C/svg%3E");
+  --col-resize-sep-bg-color: var(--mui-accent);
+  --row-border-color: rgba(148, 163, 184, 0.065);
+  --row-odd-bg-color: #0c1424;
+  --row-even-bg-color: #0f172a;
+  --row-active-bg-color: rgba(var(--mui-accent-rgb), 0.18);
+  --row-highlight-brightness: 1.32;
+
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  color: var(--mui-text-soft);
+  font-size: 10.5px;
+  background-color: var(--mui-surface);
+  -moz-user-focus: normal;
+  -moz-user-input: enabled;
+}
+
+.stable table {
+  table-layout: fixed;
+  width: 0;
+  border-spacing: 0;
+}
+
+.stable td {
+  padding: 0;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: inherit;
+  white-space: nowrap;
+}
+
+/* Sticky header ----------------------------------------------------------- */
+.stable thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 3;
+  color: var(--mui-text-muted);
+  background-color: var(--header-bg-color);
+  background-image: var(--header-bg-image);
+  box-shadow: 0 1px 0 var(--mui-border);
+}
+
+.stable thead td div {
+  position: relative;
+  margin: 0;
+  padding: 0.42rem 0.55rem;
+  color: var(--mui-text-muted);
+  font-family: 'Roboto', system-ui, Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-shadow: none;
+  border: none;
+}
+
+.stable thead td:not(:first-child) div {
+  border-left: 1px solid rgba(148, 163, 184, 0.06);
+}
+.stable thead td:not(:last-child) div {
+  border-right: 1px solid rgba(148, 163, 184, 0.06);
+}
+
+.stable thead td.asc div,
+.stable thead td.desc div {
+  padding-right: 1.5rem;
+  color: var(--mui-accent-strong);
+}
+.stable thead td.asc div::after,
+.stable thead td.desc div::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.35rem;
+  height: 100%;
+  background: no-repeat center;
+  background-image: var(--header-asc-icon);
+  background-size: 12px;
+  transition: transform 0.25s ease;
+}
+.stable thead td.desc div::after {
+  transform: rotate(-180deg);
+}
+.stable thead div.resz {
+  width: 5px;
+  height: 14px;
+  padding: 0 !important;
+  float: right;
+  border: 1px solid var(--mui-accent);
+  background: transparent url(./images/s.gif) no-repeat scroll left center;
+  cursor: e-resize;
+  opacity: 0.55;
+}
+.stable thead div.resz:hover {
+  opacity: 1;
+}
+
+/* Body -------------------------------------------------------------------- */
+.stable-body {
+  width: 100%;
+  flex: 1 1 auto;
+  overflow: auto;
+  overflow-anchor: none;
+  background: transparent;
+  text-shadow: none;
+  scroll-behavior: smooth;
+}
+
+.stable tbody tr {
+  height: 30px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.12s ease;
+}
+
+.stable tbody td {
+  background: var(--row-even-bg-color);
+  border-bottom: 1px solid var(--row-border-color);
+  transition: background-color 0.12s ease;
+}
+.stable.alternate tbody tr:nth-child(odd) td {
+  background: var(--row-odd-bg-color);
+}
+.stable.alternate tbody tr:nth-child(even) td {
+  background: var(--row-even-bg-color);
+}
+
+.stable tbody td div {
+  overflow: hidden;
+  margin: 0.15rem 0.25rem;
+  padding: 0.2rem 0.35rem;
+  border-radius: 4px;
+}
+
+.stable tbody td:first-child div {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-left: 0.45rem;
+}
+
+/* Hover only where a real pointer exists */
+@media (hover: hover) {
+  .stable tbody tr:not(.selected):hover td {
+    background: #14203a;
+    filter: none;
+  }
+  .stable tbody tr:not(.selected):hover td div:not(.meter-value) {
+    filter: brightness(var(--row-highlight-brightness));
+  }
+  /* Never filter the meter bar: the filter creates a stacking context that
+     paints over the percentage label. */
+  .stable tbody tr:not(.selected):hover td div.meter-value {
+    filter: none;
+  }
+}
+
+/* Selected row */
+.stable tbody tr.selected td {
+  background: var(--row-active-bg-color) !important;
+  color: #e3e9ff;
+  border-bottom-color: rgba(var(--mui-accent-rgb), 0.22);
+}
+.stable tbody tr.selected td:first-child {
+  box-shadow: inset 3px 0 0 var(--mui-accent);
+}
+.stable tbody tr.selected span.meter-value {
+  color: #ffffff;
+}
+.stable tbody tr.selected td div {
+  color: #e3e9ff;
+}
+
+/* Status icons ------------------------------------------------------------ */
+.stable-icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin: 0 0.1rem;
+  padding: 0 !important;
+  background: url(./images/status_icons.png) no-repeat;
+  background-size: 16px 368px;
+  border-radius: 50%;
+}
+.stable-lpad {
+  width: 5px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+
+/* Progress meters --------------------------------------------------------- */
+.meter-value {
+  float: left;
+  height: 1.05rem;
+  margin-top: 0.1rem !important;
+  background-color: var(--mui-accent);
+  background-image: linear-gradient(90deg, rgba(var(--mui-accent-rgb), 0.95), rgba(var(--mui-accent-2-rgb), 0.85));
+  border: none;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.stable tbody td div.meter-value {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.stable td:has(> .meter-value) {
+  position: relative;
+  padding-right: 4px;
+}
+
+/* If a column is dragged so narrow that even the smallest readable label
+   does not fit, let the label spill into the neighbouring cell instead of
+   being cut in half by the cell's overflow clip. */
+.stable td:has(> .meter-value).meter-overflow {
+  overflow: visible;
+  z-index: 1;
+}
+.meter-value-start-color {
+  background-color: var(--mui-warning);
+  background-image: linear-gradient(90deg, #f59e0b, #ef4444);
+}
+.meter-value-end-color {
+  background-color: var(--mui-accent);
+  background-image: linear-gradient(90deg, var(--mui-accent), var(--mui-accent-2));
+}
+.meter-text {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(var(--meter-scale, 1));
+  transform-origin: center center;
+  float: none;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+
+/* Compact mode */
+body.compact .stable tbody td div {
+  padding-block: 0;
+  margin-block: 0;
+}
+body.compact .stable tbody tr {
+  height: 24px;
+}
+
+/* Drag / scroll helpers --------------------------------------------------- */
+.stable-move-header {
+  position: absolute;
+  top: 0;
+  z-index: 300;
+  padding: 2px 12px 2px 4px;
+  overflow: hidden;
+  font: menu;
+  line-height: 12px;
+  background: rgba(var(--mui-accent-rgb), 0.9);
+  border: 1px solid var(--mui-accent-strong);
+  border-radius: 6px;
+  box-shadow: var(--mui-shadow);
+}
+.webkit .stable-move-header {
+  background: rgba(var(--mui-accent-rgb), 0.82);
+}
+.stable-active-header {
+  border-color: var(--mui-accent) !important;
+}
+.stable-separator-header {
+  position: absolute;
+  top: 0;
+  z-index: 200;
+  width: 2px;
+  height: 1.5rem;
+  padding: 3px 0;
+  background: var(--mui-accent);
+}
+.stable-scrollpos {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  display: none;
+  width: 60%;
+  height: 22px;
+  padding: 0 10px;
+  margin-top: -11px;
+  overflow: hidden;
+  color: var(--mui-text-soft);
+  font-size: 9.5px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid var(--mui-border-strong);
+  border-radius: 999px;
+  box-shadow: var(--mui-shadow);
+}
+.stable-resize-header {
+  position: absolute;
+  z-index: 100;
+  width: 1px;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--col-resize-sep-bg-color);
+}
+
+/* Column colour dots used by some plugins */
+.stable tbody td div[class*="col-"] {
+  border-radius: 4px;
+}
+
+/* Status class offsets (compatibility with the sprite) */
+.Status_Down { background-position: 0 0; }
+.Status_Up { background-position: 0 -16px; }
+.Status_Incompleted { background-position: 0 -32px; }
+.Status_Paused { background-position: 0 -48px; }
+.Status_Error_Down { background-position: 0 -64px; }
+.Status_Error_Up { background-position: 0 -80px; }
+.Status_Error { background-position: 0 -96px; }
+.Status_Completed { background-position: 0 -112px; }
+.Status_Queued_Down { background-position: 0 -128px; }
+.Status_Queued_Up { background-position: 0 -144px; }
+.Status_Up_Down { background-position: 0 -160px; }
+.Status_Checking { background-position: 0 -176px; }
+.Status_RSS { background-position: 0 -208px; }
+
+/* ==========================================================================
+   Light theme refinements
+   ========================================================================== */
+.stable {
+  --header-bg-image: linear-gradient(180deg, rgba(15, 23, 42, 0.035), rgba(15, 23, 42, 0));
+  --row-border-color: rgba(15, 23, 42, 0.07);
+  --row-odd-bg-color: #f8fafc;
+  --row-even-bg-color: #ffffff;
+  --row-active-bg-color: rgba(var(--mui-accent-rgb), 0.12);
+  --header-asc-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 15 6-6 6 6'/%3E%3C/svg%3E");
+}
+
+.stable thead td:not(:first-child) div {
+  border-left-color: rgba(15, 23, 42, 0.06);
+}
+.stable thead td:not(:last-child) div {
+  border-right-color: rgba(15, 23, 42, 0.06);
+}
+
+@media (hover: hover) {
+  .stable tbody tr:not(.selected):hover td {
+    background: #eef2ff;
+  }
+  /* A brightness filter washes text out on light rows. */
+  .stable tbody tr:not(.selected):hover td div:not(.meter-value) {
+    filter: none;
+  }
+}
+
+.stable tbody tr.selected td {
+  color: var(--mui-text);
+  border-bottom-color: rgba(var(--mui-accent-rgb), 0.24);
+}
+.stable tbody tr.selected td div {
+  color: var(--mui-text);
+}
+.stable tbody tr.selected span.meter-value {
+  color: #ffffff;
+}
+
+.stable-scrollpos {
+  background: rgba(255, 255, 255, 0.97);
+}
+
+/* The percentage label is centred over the filled part of the bar, but short
+   bars keep it close to the white track. Dark text with a white halo stays
+   readable on both. */
+.meter-text {
+  color: var(--mui-text);
+  text-shadow:
+    0 0 2px #ffffff,
+    0 0 3px #ffffff,
+    0 1px 2px rgba(255, 255, 255, 0.95);
+}
+
+/* When the whole label fits on the coloured bar, white text with a dark
+   shadow is crisper than the dark-on-track variant above. */
+.meter-text.meter-text-onbar {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+}

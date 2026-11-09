@@ -1,0 +1,284 @@
+/* ==========================================================================
+   ModernUI for ruTorrent - plugin additions
+   Loaded after style.css, so these rules can safely refine plugin widgets.
+   ========================================================================== */
+
+/* Status bar pane icons used by the cpuload / diskspace / port plugins */
+#StatusBar {
+  --pane-cpu-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23818cf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='6' width='12' height='12' rx='2'/%3E%3Cpath d='M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3'/%3E%3C/svg%3E");
+  --pane-disk-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 12H2M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z'/%3E%3Cpath d='M6 16h.01M10 16h.01'/%3E%3C/svg%3E");
+  --pane-port-success-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+}
+
+/* File manager / directory browser ---------------------------------------- */
+.browseFrame {
+  background-color: var(--mui-surface);
+  border: 1px solid var(--mui-border);
+  border-radius: var(--mui-radius);
+}
+#fMan_navbut {
+  background-image: url(./images/directory.png) !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 18px !important;
+  background-color: var(--mui-surface-2) !important;
+  border: 1px solid var(--mui-border) !important;
+  border-radius: 8px !important;
+}
+#fMan_navbut:hover {
+  background-image: url(./images/refresh.png) !important;
+  border-color: var(--mui-border-strong) !important;
+}
+#fMan_pathsel {
+  max-width: 600px !important;
+}
+.Icon_File,
+.Icon_Dir,
+.Icon_Share {
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+/* Consoles / task runner -------------------------------------------------- */
+.tskconsole,
+.exconsole,
+.console,
+.starterConsole {
+  color: var(--mui-text-soft);
+  background: rgba(2, 6, 23, 0.55);
+  border: 1px solid var(--mui-border);
+  border-radius: 8px;
+}
+#tsk_btns input.Button {
+  margin: 0 3px;
+}
+#tsk_btns .scplay {
+  display: none;
+}
+
+/* Disk / CPU meters ------------------------------------------------------- */
+#meter-disk-value {
+  float: left;
+  overflow: hidden;
+  background-color: var(--mui-success);
+  background-image: linear-gradient(90deg, var(--mui-accent), var(--mui-accent-2));
+  border: none;
+  border-radius: 999px;
+}
+#meter-disk-text,
+#meter-band-text {
+  z-index: 1;
+  color: #ffffff;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+#meter-cpu-text {
+  color: var(--mui-text-soft);
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 9.5px;
+  text-shadow: none;
+}
+
+/* Dialog header icons keep the original sprite art ------------------------ */
+#tcreate-header {
+  background-image: url(./images/dlg-toolbars.gif);
+  background-position-y: -24px;
+}
+#dlgAddRSS {
+  background-color: var(--mui-surface);
+  border: 1px solid var(--mui-border);
+  border-radius: var(--mui-radius-lg);
+}
+#dlgAddRSS-header {
+  background-image: url(./images/dlg-toolbars.gif);
+  background-position-y: -48px;
+}
+#stg-header {
+  background-image: url(./images/dlg-toolbars.gif);
+  background-position-y: -72px;
+}
+#dlgHelp-header,
+#dlgAbout-header {
+  background-image: url(./images/dlg-toolbars.gif);
+  background-position-y: -96px;
+}
+#yesnoDlg-header {
+  background-image: url(./images/dlg-toolbars.gif);
+  background-position-y: -120px;
+}
+#FS_main div.dlg-header {
+  background-image: url(./images/share.png) !important;
+}
+#dlgEditRules-header,
+#dlgEditRatioRules-header,
+#dlgEditFilters-header {
+  background-image: url(./images/dlg-toolbars.gif);
+  background-position-y: -72px;
+}
+#dlgEditRules,
+#dlgEditRatioRules {
+  width: 620px;
+}
+
+/* Auto-download / IRC ----------------------------------------------------- */
+#autodl-tb {
+  background: transparent url(./images/autodll-irc1.png) no-repeat center;
+}
+#autodl-tb:hover {
+  background: transparent url(./images/autodll-irc2.png) no-repeat center;
+}
+#autodl-multiselect-header {
+  background-image: url(./images/dlg-autodl-irc.gif);
+}
+.lf_rru,
+.lf_rur {
+  background-color: var(--mui-surface-2);
+  border: 1px solid var(--mui-border) !important;
+  border-radius: 8px;
+}
+#exratio_buttons1 input.Button,
+#tsk_btns input.Button {
+  margin: 0 3px;
+}
+
+/* Alternate row colours used by plugin tables ----------------------------- */
+.shieven {
+  background: rgba(148, 163, 184, 0.04);
+}
+.shiodd {
+  background: rgba(148, 163, 184, 0.08);
+}
+
+/* Web UI update / refresh controls ---------------------------------------- */
+div#webuiUpdateToggle.pause {
+  background: transparent url(./images/pauseui.png) no-repeat;
+}
+div#webuiUpdateToggle.pause:hover {
+  background: transparent url(./images/pauseuih.png) no-repeat;
+}
+div#webuiUpdateToggle.resume {
+  background: transparent url(./images/playui.png) no-repeat;
+}
+div#webuiUpdateToggle.resume:hover {
+  background: transparent url(./images/playuih.png) no-repeat;
+}
+div#webuiRefresh {
+  background: transparent url(./images/refreshui.png) no-repeat;
+}
+div#webuiRefresh:hover {
+  background: transparent url(./images/refreshuih.png) no-repeat;
+}
+div#linkproxy {
+  background: transparent url(./images/proxy.png) no-repeat;
+}
+div#linkproxy:hover {
+  background: transparent url(./images/proxyh.png) no-repeat;
+}
+div#linklogs {
+  background: transparent url(./images/linklogs.png) no-repeat;
+}
+div#linklogs:hover {
+  background: transparent url(./images/linklogsh.png) no-repeat;
+}
+div#linkseedboxmanager {
+  background: transparent url(./images/seedboxmanager.png) no-repeat;
+}
+div#linkseedboxmanager:hover {
+  background: transparent url(./images/seedboxmanagerh.png) no-repeat;
+}
+div#plugin {
+  background: transparent url(./images/plugin.png) no-repeat;
+}
+div#plugin:hover {
+  background: transparent url(./images/pluginh.png) no-repeat;
+}
+
+/* Chat -------------------------------------------------------------------- */
+#maillayout #letterform table tr td,
+#maillayout #replyform table tr td {
+  background: var(--mui-surface);
+}
+div#chat {
+  background-image: url(./images/chat.png);
+}
+div#chat:hover {
+  background-image: url(./images/chat3.png);
+}
+#tchat div.dlg-header {
+  background-image: url(./images/chat2.png);
+}
+#userlist,
+#chatselect,
+#chatarea,
+#chatselect option {
+  color: var(--mui-text) !important;
+  background-color: var(--mui-surface-2) !important;
+  border: 1px solid var(--mui-border) !important;
+  border-radius: 8px !important;
+}
+
+/* Login / logoff ---------------------------------------------------------- */
+div#logoff {
+  background-image: url(./images/logoff.png);
+}
+div#logoff:hover {
+  background-image: url(./images/logoff3.png);
+}
+#logoffDlg div.dlg-header {
+  background-image: url(./images/logoff2.png);
+}
+
+/* Notifications ----------------------------------------------------------- */
+.noty_alert,
+.noty_success {
+  color: var(--mui-text);
+  text-shadow: none;
+  background: var(--mui-surface-2);
+  border: 1px solid var(--mui-border-strong);
+  border-radius: var(--mui-radius);
+  box-shadow: var(--mui-shadow);
+}
+
+/* Speed graph cell palette (keep readable on the dark surface) ------------ */
+.cCell {
+  color: #08111f;
+}
+.Cell0 { background-color: #f8fafc; border: 1px dotted #64748b; }
+.Cell1 { background-color: #34d399; }
+.Cell2 { background-color: #2bc48c; }
+.Cell3 { background-color: #23b47f; }
+.Cell4 { background-color: #1da473; }
+.Cell5 { background-color: #189568; }
+.Cell6 { background-color: #13865d; }
+.Cell7 { background-color: #0e7752; }
+.Cell8 { background-color: #0a6848; }
+.Cell9 { background-color: #06593e; }
+.CellA { background-color: #cbd5e1; }
+.CellB { background-color: #a8b6c8; }
+.CellC { background-color: #8797ad; }
+.CellD { background-color: #687a93; }
+.CellE { background-color: #4c5f79; }
+.CellF { background-color: #0b1220; color: #ffffff; }
+#tCellNotSupported {
+  color: var(--mui-text-muted);
+  text-align: center;
+}
+#tRowNotSupported {
+  color: var(--mui-danger);
+  vertical-align: middle;
+}
+
+/* Port / IP status text --------------------------------------------------- */
+#port-ip-text {
+  color: var(--mui-text);
+}
+
+/* Misc plugin frames ------------------------------------------------------ */
+#dlgProps textarea#prop-trackers {
+  color: var(--mui-text) !important;
+  background: var(--mui-surface-2) !important;
+  border: 1px solid var(--mui-border) !important;
+  border-radius: 8px !important;
+}

@@ -55,7 +55,6 @@ to change them:
 
 Keep each `*-rgb` value in sync with its hex colour.
 
-
 ## Credits & license
 
 Built on the bundled **MaterialDesign** theme (Phlo, LesBleus), with icons from

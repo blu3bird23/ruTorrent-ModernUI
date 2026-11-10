@@ -7,7 +7,7 @@
  */
 
 /* Slightly taller rows give the table a calmer, more modern rhythm. */
-TR_HEIGHT = 30;
+TR_HEIGHT = 32;
 
 plugin.modernuiAllDone = plugin.allDone;
 plugin.allDone = function()
@@ -254,4 +254,41 @@ if (typeof dxSTable.prototype.resizeColumn === "function")
 		document.addEventListener("DOMContentLoaded", start);
 	else
 		start();
+})();
+/* Cache busting ------------------------------------------------------------
+   ruTorrent loads the theme sheets through injectCSS()/cacheBust(), which
+   appends "?v=" plus the *ruTorrent* version. That URL does not change when
+   the theme files do, so a browser - or a caching proxy in front of
+   ruTorrent - can keep serving an older build after the folder was replaced.
+   The result is a half-updated theme: the new plugins.css shows up while
+   style.css stays behind (or vice versa).
+   Re-append the three sheets under a nonce that changes on every page load,
+   so the files that are on disk always win the cascade.
+   -------------------------------------------------------------------------- */
+(function ()
+{
+	"use strict";
+
+	if (typeof plugin === "undefined" || !plugin || !plugin.path)
+		return;
+
+	var nonce = Date.now();
+
+	function refresh(name)
+	{
+		var link = document.createElement("link");
+		link.rel = "stylesheet";
+		link.href = plugin.path + name + ".css?mui=" + nonce;
+		link.setAttribute("data-mui-refresh", name);
+		document.head.appendChild(link);
+	}
+
+	refresh("style");
+	refresh("stable");
+
+	/* plugins.css is injected by the theme plugin in allDone(), i.e. after the
+	   sheets of the other plugins. Refresh it once the page has loaded so it
+	   is the last stylesheet in the cascade. */
+	if (window.addEventListener)
+		window.addEventListener("load", function () { refresh("plugins"); });
 })();

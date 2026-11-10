@@ -31,6 +31,14 @@ other, no CDN, all icons and fonts bundled.
 
 To make it the default, set `$defaultTheme` in `plugins/theme/conf.php`.
 
+### Stale styles after an update
+
+ruTorrent links the theme CSS as `style.css?v=<ruTorrent version>` — a URL that does not change when
+the theme files do, so a browser or a caching proxy in front of ruTorrent can keep serving an older
+build (a replaced theme then looks half updated). Both themes re-append their sheets with a
+per-load nonce from `init.js`, so the files on disk always win. If something still looks outdated,
+replace the whole theme folder (not single files) and reload with **Ctrl + F5**.
+
 ## Customize
 
 Colours are CSS custom properties at the top of `style.css`. Append overrides to the end of the file
@@ -47,10 +55,6 @@ to change them:
 
 Keep each `*-rgb` value in sync with its hex colour.
 
-## Preview
-
-Open `themes/ModernUI/preview.html` or `themes/ModernUI-Light/preview.html` in a browser. No build
-step required.
 
 ## Credits & license
 

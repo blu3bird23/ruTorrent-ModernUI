@@ -3,8 +3,10 @@
    Loaded after style.css, so these rules can safely refine plugin widgets.
    ========================================================================== */
 
-/* Status bar pane icons used by the cpuload / diskspace / port plugins */
-#StatusBar {
+/* Status bar pane icons used by the cpuload / diskspace / port plugins.
+   The plugin CSS files declare the same variables on a bare #StatusBar and are
+   loaded after this file, so the selector has to be more specific to win. */
+html body #StatusBar {
   --pane-cpu-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23818cf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='6' width='12' height='12' rx='2'/%3E%3Cpath d='M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3'/%3E%3C/svg%3E");
   --pane-disk-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 12H2M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z'/%3E%3Cpath d='M6 16h.01M10 16h.01'/%3E%3C/svg%3E");
   --pane-port-success-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
@@ -57,6 +59,13 @@
 }
 
 /* Disk / CPU meters ------------------------------------------------------- */
+/* The diskspace plugin puts a `1px inset #BBBBBB` border on the meter track.
+   The bar itself is a filled pill, so that outline only draws a stray box
+   around it. Drop the track frame everywhere in the status bar. */
+#StatusBar [id$="-holder"] {
+  border: 0 !important;
+  background: transparent !important;
+}
 #meter-disk-value {
   float: left;
   overflow: hidden;
@@ -70,52 +79,66 @@
   z-index: 1;
   color: #ffffff;
   font-family: 'Roboto', Arial, sans-serif;
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 #meter-cpu-text {
   color: var(--mui-text-soft);
   font-family: 'Roboto', Arial, sans-serif;
-  font-size: 9.5px;
+  font-size: 10px;
   text-shadow: none;
 }
 
-/* Dialog header icons keep the original sprite art ------------------------ */
+/* Dialog header icons ------------------------------------------------------
+   The stock dlg-toolbars.gif sprite bakes an opaque dark background into its
+   icon cells, which looked like muddy boxes against the dark panels. The
+   header icons are inline SVG data URIs instead: no sprite, no web font to
+   load, and no background box. Core already reserves 2rem of left padding for
+   the icon, so only the image and its box need to be set here. */
+#tcreate-header,
+#dlgAddRSS-header,
+#stg-header,
+#dlgHelp-header,
+#dlgAbout-header,
+#yesnoDlg-header,
+#dlgEditRules-header,
+#dlgEditRatioRules-header,
+#dlgEditFilters-header,
+#autodl-multiselect-header {
+  background-repeat: no-repeat !important;
+  background-position: 6px center !important;
+  background-size: 16px 16px !important;
+  padding-left: 27px !important;
+}
 #tcreate-header {
-  background-image: url(./images/dlg-toolbars.gif);
-  background-position-y: -24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8.5v7M8.5 12h7'/%3E%3C/svg%3E") !important;
+}
+#dlgAddRSS-header {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fbbf24' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 11a8 8 0 0 1 8 8'/%3E%3Cpath d='M5 5a14 14 0 0 1 14 14'/%3E%3Ccircle cx='5.8' cy='18.2' r='1.6' fill='%23fbbf24' stroke='none'/%3E%3C/svg%3E") !important;
+}
+#stg-header {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c5d3e3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E") !important;
+}
+#dlgHelp-header,
+#dlgAbout-header {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 16v-4.5M12 8h.01'/%3E%3C/svg%3E") !important;
+}
+#yesnoDlg-header {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fb7185' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.3 3.9 2.3 18a2 2 0 0 0 1.7 3h16a2 2 0 0 0 1.7-3l-8-14.1a2 2 0 0 0-3.4 0z'/%3E%3Cpath d='M12 9v4M12 17h.01'/%3E%3C/svg%3E") !important;
+}
+#dlgEditRules-header,
+#dlgEditRatioRules-header,
+#dlgEditFilters-header {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c5d3e3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 21v-6M4 11V3M12 21v-9M12 8V3M20 21v-4M20 13V3M1.5 15h5M9.5 8h5M17.5 17h5'/%3E%3C/svg%3E") !important;
+}
+#autodl-multiselect-header {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7.5 10.5 12 15l4.5-4.5M12 15V3'/%3E%3C/svg%3E") !important;
 }
 #dlgAddRSS {
   background-color: var(--mui-surface);
   border: 1px solid var(--mui-border);
   border-radius: var(--mui-radius-lg);
-}
-#dlgAddRSS-header {
-  background-image: url(./images/dlg-toolbars.gif);
-  background-position-y: -48px;
-}
-#stg-header {
-  background-image: url(./images/dlg-toolbars.gif);
-  background-position-y: -72px;
-}
-#dlgHelp-header,
-#dlgAbout-header {
-  background-image: url(./images/dlg-toolbars.gif);
-  background-position-y: -96px;
-}
-#yesnoDlg-header {
-  background-image: url(./images/dlg-toolbars.gif);
-  background-position-y: -120px;
-}
-#FS_main div.dlg-header {
-  background-image: url(./images/share.png) !important;
-}
-#dlgEditRules-header,
-#dlgEditRatioRules-header,
-#dlgEditFilters-header {
-  background-image: url(./images/dlg-toolbars.gif);
-  background-position-y: -72px;
 }
 #dlgEditRules,
 #dlgEditRatioRules {
@@ -128,9 +151,6 @@
 }
 #autodl-tb:hover {
   background: transparent url(./images/autodll-irc2.png) no-repeat center;
-}
-#autodl-multiselect-header {
-  background-image: url(./images/dlg-autodl-irc.gif);
 }
 .lf_rru,
 .lf_rur {

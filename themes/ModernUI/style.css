@@ -353,7 +353,7 @@ category-panel {
 html,
 body {
   font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif !important;
-  font-size: 10.5px;
+  font-size: 11.5px;
   line-height: 1.45;
   color: var(--text-color);
   background-color: var(--mui-bg);
@@ -456,7 +456,7 @@ a:hover {
 }
 .btn-close:hover,
 #offcanvas-sidepanel .btn-close:hover {
-  background-color: var(--mui-surface-3);
+  background-color: var(--mui-surface-3) !important;
   border-color: var(--mui-border-strong);
   opacity: 1;
 }
@@ -495,7 +495,7 @@ div#msg {
   margin: -86px auto 0;
   padding: 1.6rem 1.75rem !important;
   color: var(--mui-text-soft);
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 500;
   line-height: 1.7;
   background: linear-gradient(180deg, var(--mui-surface-2), var(--mui-surface));
@@ -689,7 +689,7 @@ div#t div.TB_Separator {
   transition: background-color 0.16s ease, border-color 0.16s ease;
 }
 .navbar-toggler:hover {
-  background: var(--mui-surface-3);
+  background: var(--mui-surface-3) !important;
   border-color: var(--mui-border-strong);
 }
 .navbar-toggler:focus {
@@ -764,12 +764,12 @@ div#t div.TB_Separator {
 
 category-list {
   display: block;
-  font-size: 10.5px;
+  font-size: 11.5px;
 }
 
 category-panel,
 panel-label {
-  font-size: 10.5px;
+  font-size: 11.5px;
 }
 
 category-panel {
@@ -786,7 +786,7 @@ category-panel::part(heading) {
   height: 32px;
   padding: 0 7px;
   color: var(--mui-text-dim);
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.12em;
   line-height: 32px;
@@ -807,7 +807,7 @@ panel-label {
   margin: 1px 0;
   padding: 0 8px;
   color: var(--mui-text-soft);
-  font-size: 10.5px;
+  font-size: 11.5px;
   border-radius: 9px;
   transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 
@@ -850,7 +850,7 @@ panel-label::part(text) {
 
 panel-label::part(count),
 panel-label::part(size) {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 600;
 }
 
@@ -974,7 +974,7 @@ div.tab {
   margin: 0;
   padding: 0.38rem 0.8rem;
   color: var(--mui-text-muted);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   line-height: 1.2;
   background: transparent;
@@ -1020,7 +1020,7 @@ div#gcont div.row.Header {
   margin-top: 0.55rem;
   padding: 0.35rem 0.5rem;
   color: var(--mui-text-muted);
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1057,14 +1057,14 @@ div#gcont span.det-hdr {
 div#lcont {
   padding: 4px;
   color: var(--mui-text-soft);
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.55;
   background: transparent;
 }
 div#lcont div.mono {
   color: var(--mui-text-soft);
   font-family: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
-  font-size: 9.5px;
+  font-size: 10px;
   line-height: 1.55;
   background: transparent;
   white-space: pre-wrap;
@@ -1144,7 +1144,7 @@ div.table_tab {
   margin: 8px;
   padding: 0 6px;
   color: var(--mui-text-muted);
-  font-size: 9.5px;
+  font-size: 10px;
   background-color: var(--footer-bg-color);
   background-image: var(--footer-bg-image);
   border: 1px solid var(--mui-border);
@@ -1247,7 +1247,7 @@ span.det {
 .dlg-header {
   padding: 0.7rem 0.85rem;
   color: var(--text-header-color);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: none;
   text-shadow: none;
@@ -1439,20 +1439,31 @@ input[type="submit"],
   cursor: pointer;
   transition: filter 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
-button:hover,
-input[type="button"]:hover,
-input[type="submit"]:hover,
-.Button:hover,
+/* ruTorrent's core rule `button:not(:disabled):hover` paints the button
+   #f5f5f5, and the plugin/core CSS can be injected after this file. Mark the
+   colours important so the accent background and white label always win. */
+button:not(:disabled):not(.navbar-toggler):not(.btn-close):hover,
+input[type="button"]:not(:disabled):hover,
+input[type="submit"]:not(:disabled):hover,
+.Button:not(:disabled):hover,
+a.Button:not(:disabled):hover,
 .btn:hover {
+  color: #ffffff !important;
+  background-color: var(--mui-accent) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)) !important;
   filter: brightness(1.14);
   transform: translateY(-1px);
   box-shadow: 0 8px 20px rgba(var(--mui-accent-rgb), 0.32);
 }
-button:active,
-input[type="button"]:active,
-input[type="submit"]:active,
-.Button:active,
+button:not(:disabled):not(.navbar-toggler):not(.btn-close):active,
+input[type="button"]:not(:disabled):active,
+input[type="submit"]:not(:disabled):active,
+.Button:not(:disabled):active,
+a.Button:not(:disabled):active,
 .btn:active {
+  color: #ffffff !important;
+  background-color: var(--mui-accent) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)) !important;
   filter: brightness(1.02);
   transform: translateY(0) scale(0.98);
 }
@@ -1643,7 +1654,7 @@ div#sc ul {
 div#sc li div {
   padding: 7px 10px;
   color: var(--menu-color);
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 500;
   line-height: 1.35;
   border-radius: 7px;
@@ -1663,7 +1674,7 @@ div#lng {
 .status-tip {
   padding: 6px 10px;
   color: var(--status-tip-color);
-  font-size: 10.5px;
+  font-size: 11.5px;
   background-color: var(--status-tip-background-color);
   border: 1px solid var(--mui-border-strong);
   border-radius: 8px;
@@ -1781,7 +1792,7 @@ span#ra {
 
 @media (max-width: 991.98px) {
   #StatusBar {
-    font-size: 9.5px;
+    font-size: 10px;
   }
   #StatusBar .status-cell {
     padding: 0 8px;
@@ -1804,7 +1815,7 @@ span#ra {
   #offcanvas-sidepanel .offcanvas-title {
     margin: 0;
     color: var(--mui-text);
-    font-size: 11.5px;
+    font-size: 12.5px;
     font-weight: 600;
   }
   #maincont {
@@ -1845,7 +1856,7 @@ span#ra {
     padding: 0 7px;
   }
   #StatusBar {
-    font-size: 9px;
+    font-size: 9.5px;
   }
   #clear_log {
     right: 1.1rem;
@@ -1931,7 +1942,7 @@ span#ra {
     padding: 8px 10px;
     gap: 10px;
     color: var(--mui-text-soft);
-    font-size: 10.5px;
+    font-size: 11.5px;
     font-weight: 500;
     line-height: 1.25;
     text-align: left;
@@ -2018,4 +2029,103 @@ span#ra {
     border: 1px solid var(--mui-border);
     border-radius: 10px;
   }
+}
+
+/* --------------------------------------------------------------------------
+   Hover guards (last word)
+   ruTorrent's core paints every enabled button #F5F5F5 on hover with
+   `button:not(:disabled):hover`, and plugin CSS can be injected after this
+   file. These rules sit at the very end so the accent background survives any
+   load order, and so no button can ever fall back to a white hover.
+   -------------------------------------------------------------------------- */
+html body button:not(:disabled):not(.navbar-toggler):not(.btn-close):hover,
+html body button:not(:disabled):not(.navbar-toggler):not(.btn-close):active,
+html body input[type="button"]:not(:disabled):hover,
+html body input[type="button"]:not(:disabled):active,
+html body input[type="submit"]:not(:disabled):hover,
+html body input[type="submit"]:not(:disabled):active,
+html body input[type="reset"]:not(:disabled):hover,
+html body .Button:not(:disabled):hover,
+html body .Button:not(:disabled):active,
+html body a.Button:not(:disabled):hover,
+html body a.Button:not(:disabled):active,
+html body .btn:not(:disabled):hover,
+html body .btn:not(:disabled):active {
+  color: #ffffff !important;
+  background-color: var(--mui-accent) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)) !important;
+  border-color: var(--mui-accent-strong) !important;
+}
+/* --------------------------------------------------------------------------
+   Dialog footer buttons (final word)
+   The settings dialog builds its footer in js/content.js as a *plain*
+   <button> with no class at all, directly next to <button class="Cancel">.
+   A bare <button> is the one element ruTorrent's own core CSS, and every
+   plugin stylesheet, is allowed to repaint:
+
+       button { background: var(--btn-bg-color) url(../images/h.gif) ...; }
+
+   injectCSS() decides at runtime which of those sheets lands last, and on
+   equal specificity the later one wins - which hands the button back to
+   ruTorrent's pale stock sprite. The label then stays white and the button
+   looks like an empty white pill, both at rest and on hover.
+   Pin the dialog buttons down with an id, a class, an `html body` prefix,
+   `!important` on every colour, `appearance: none` and `var()` fallbacks, so
+   neither a later sheet nor a missing custom property can repaint them.
+   -------------------------------------------------------------------------- */
+html body #st_btns.buttons-list > button,
+html body #st_btns.buttons-list > input[type="button"],
+html body #st_btns.buttons-list > input[type="submit"],
+html body #st_btns.buttons-list > .Button,
+html body .dlg-window .buttons-list > button,
+html body .dlg-window .buttons-list > input[type="button"],
+html body .dlg-window .buttons-list > input[type="submit"],
+html body .dlg-window .buttons-list > .Button,
+html body .dlg-window .buttons-list > .btn {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  color: #ffffff !important;
+  background-color: var(--mui-accent, #6366f1) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)) !important;
+  background-repeat: no-repeat !important;
+  background-position: 0 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  text-shadow: none !important;
+}
+html body #st_btns.buttons-list > button:hover,
+html body #st_btns.buttons-list > button:focus,
+html body #st_btns.buttons-list > button:focus-visible,
+html body #st_btns.buttons-list > button:active,
+html body #st_btns.buttons-list > input[type="button"]:hover,
+html body #st_btns.buttons-list > input[type="submit"]:hover,
+html body #st_btns.buttons-list > .Button:hover,
+html body .dlg-window .buttons-list > button:hover,
+html body .dlg-window .buttons-list > button:focus,
+html body .dlg-window .buttons-list > button:focus-visible,
+html body .dlg-window .buttons-list > button:active,
+html body .dlg-window .buttons-list > input[type="button"]:hover,
+html body .dlg-window .buttons-list > input[type="submit"]:hover,
+html body .dlg-window .buttons-list > .Button:hover,
+html body .dlg-window .buttons-list > .btn:hover {
+  color: #ffffff !important;
+  background-color: var(--mui-accent, #6366f1) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)) !important;
+  background-repeat: no-repeat !important;
+  background-position: 0 0 !important;
+  border-color: var(--mui-accent-strong, #818cf8) !important;
+  text-shadow: none !important;
+}
+html body #st_btns.buttons-list > button:disabled,
+html body #st_btns.buttons-list > input:disabled,
+html body .dlg-window .buttons-list > button:disabled,
+html body .dlg-window .buttons-list > input:disabled,
+html body .dlg-window .buttons-list > a.Button:disabled {
+  color: rgba(255, 255, 255, 0.92) !important;
+  background-color: var(--mui-accent, #6366f1) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)) !important;
+  background-repeat: no-repeat !important;
+  background-position: 0 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+  opacity: 0.55 !important;
 }

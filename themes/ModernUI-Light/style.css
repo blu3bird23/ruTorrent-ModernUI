@@ -641,8 +641,20 @@ div#t div.TB_Separator {
   border: none;
 }
 
-/* Search box */
+/* Search box.
+   ruTorrent 5.3.24 wraps the field in #query_box and adds a #query_clear
+   button, so the wrapper carries the footprint the field used to have. */
+#query_box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  width: 184px;
+  margin: 0 4px;
+}
+/* Standalone field: ruTorrent up to 5.3.23 has no #query_box wrapper. */
 #query {
+  flex: 0 0 auto;
   width: 176px;
   height: 34px;
   margin: 0 4px;
@@ -653,6 +665,14 @@ div#t div.TB_Separator {
   border-radius: 10px;
   transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
 }
+/* Inside the 5.3.24 wrapper the field fills it, with room for the clear button. */
+#query_box #query {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0 30px 0 12px;
+}
 #query::placeholder {
   color: var(--mui-text-dim);
 }
@@ -661,6 +681,49 @@ div#t div.TB_Separator {
   border-color: rgba(var(--mui-accent-rgb), 0.7);
   box-shadow: var(--mui-ring);
   outline: none;
+}
+
+/* Clear-search button (5.3.24). Without this the theme's global button rules
+   would render it as a full accent pill. */
+#query_box #query_clear {
+  all: unset;
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(71, 85, 105, 0.16) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.4 1.4l5.2 5.2M6.6 1.4L1.4 6.6' stroke='%23475569' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 8px !important;
+  box-shadow: none;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0.9;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+#query_box #query_clear[hidden] {
+  display: none !important;
+}
+#query_box #query_clear:hover,
+#query_box #query_clear:active {
+  background-color: var(--mui-accent) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.4 1.4l5.2 5.2M6.6 1.4L1.4 6.6' stroke='%23FFFFFF' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 8px !important;
+  filter: none;
+  transform: translateY(-50%);
+  box-shadow: none;
+  opacity: 1;
+}
+#query_box #query_clear:focus-visible {
+  outline: 2px solid rgba(var(--mui-accent-rgb), 0.85);
+  outline-offset: 2px;
 }
 
 #rc {
@@ -1828,6 +1891,9 @@ span#ra {
   #query {
     width: 120px;
   }
+  #query_box {
+    width: 128px;
+  }
   #StatusBar {
     margin: 6px;
   }
@@ -1842,6 +1908,9 @@ span#ra {
 @media (max-width: 575.98px) {
   #query {
     width: 92px;
+  }
+  #query_box {
+    width: 100px;
   }
   #t .nav-link,
   #t .top-menu-item {
@@ -2002,6 +2071,12 @@ span#ra {
   }
   #top-menu #rc .nav-link > span {
     display: none !important;
+  }
+  #top-menu #query_box {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    margin: 0;
   }
   #top-menu #query {
     flex: 1 1 auto;

@@ -11,7 +11,7 @@ other, no CDN, all icons and fonts bundled.
 
 ## Requirements
 
-- ruTorrent **5.3.x** (Bootstrap 5)
+- ruTorrent **5.3.x** (Bootstrap 5), tested with **5.3.24**
 - The `theme` plugin enabled (ships with ruTorrent)
 - Write access to `rutorrent/plugins/theme/themes/`
 
